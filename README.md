@@ -62,7 +62,7 @@ This node mimics the interface of 'pr2_gripper_grasp_controller', which wraps 'p
 <br>
 **Required ROS packages:** <br>
 reem_common     (DavidB-PAL fork, not yet merged with Master 15/3/13) <br>
-reem_simulation (DavidB-PAL fork, not yet merged with Master 15/3/13) <br>
+reem_simulation (DavidB-PAL fork, not yet merged with Master 15/3/13) 
 <br>
 
 <br>
@@ -74,7 +74,7 @@ $ roslaunch reem_hand_grasp_controller both_hands.launch sim:=true <br>
 **Usage (real robot):** <br>
 Connect to the robot. <br>
 Load the controller with position control of the 2 finger motors: <br>
-$ roslaunch reem_hand_grasp_controller both_hands.launch sim:=false <br>
+$ roslaunch reem_hand_grasp_controller both_hands.launch sim:=false 
 <br>
 
 <br>
