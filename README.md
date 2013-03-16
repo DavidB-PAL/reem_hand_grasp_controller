@@ -2,7 +2,7 @@
 Copyright (c) 2013, David Butterworth, PAL Robotics S.L. 
 <br>
 <br>
-Grasp controller and Action Server for the REEM robot hand
+A grasp controller and Action Server for the REEM robot hand.
 
 This node provides an all-in-one posture controller for the REEM hand, and can be used directly as an Action Server for the hand, whilst also being compatible with the ROS Manipulation Pipeline.
 
@@ -13,18 +13,18 @@ Works with both simulated or real robot. In simulation, the controller moves all
 
 <br>
 Creates a ROS Action Server at <br>
-.    /Node_Namespace/grasp_posture_controller/ <br>
+    /Node_Namespace/grasp_posture_controller/ <br>
 so it should be launched under the same namespace as <br>
 the hand controllers, such that running 2 nodes gives e.g. <br>
-.   /left_hand_controller/grasp_posture_controller/ <br>
-.   /right_hand_controller/grasp_posture_controller/ <br>
+    /left_hand_controller/grasp_posture_controller/ <br>
+    /right_hand_controller/grasp_posture_controller/ <br>
 
 It receives Action messages of type <br>
-.   object_manipulation_msgs::GraspHandPostureExecutionAction <br>
+    object_manipulation_msgs::GraspHandPostureExecutionAction <br>
 containing one of three goals <br>
-.   object_manipulation_msgs::GraspHandPostureExecutionGoal::PRE_GRASP <br>
-.   object_manipulation_msgs::GraspHandPostureExecutionGoal::GRASP <br>
-.   object_manipulation_msgs::GraspHandPostureExecutionGoal::RELEASE <br>
+    object_manipulation_msgs::GraspHandPostureExecutionGoal::PRE_GRASP <br>
+    object_manipulation_msgs::GraspHandPostureExecutionGoal::GRASP <br>
+    object_manipulation_msgs::GraspHandPostureExecutionGoal::RELEASE <br>
 along with  angles...
 
 and sends commands to the JointTrajectoryAction controller in its own <br>
