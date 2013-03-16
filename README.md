@@ -13,34 +13,34 @@ Works with both simulated or real robot. In simulation, the controller moves all
 
 <br>
 Creates a ROS Action Server at <br>
-	  /Node_Namespace/grasp_posture_controller/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;/Node_Namespace/grasp_posture_controller/ <br>
 so it should be launched under the same namespace as <br>
 the hand controllers, such that running 2 nodes gives e.g. <br>
-	  /left_hand_controller/grasp_posture_controller/ <br>
-	  /right_hand_controller/grasp_posture_controller/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;/left_hand_controller/grasp_posture_controller/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;/right_hand_controller/grasp_posture_controller/ <br>
 
 It receives Action messages of type <br>
-    object_manipulation_msgs::GraspHandPostureExecutionAction <br>
+&nbsp;&nbsp;&nbsp;&nbsp;object_manipulation_msgs::GraspHandPostureExecutionAction <br>
 containing one of three goals <br>
-    object_manipulation_msgs::GraspHandPostureExecutionGoal::PRE_GRASP <br>
-    object_manipulation_msgs::GraspHandPostureExecutionGoal::GRASP <br>
-    object_manipulation_msgs::GraspHandPostureExecutionGoal::RELEASE <br>
+&nbsp;&nbsp;&nbsp;&nbsp;object_manipulation_msgs::GraspHandPostureExecutionGoal::PRE_GRASP <br>
+&nbsp;&nbsp;&nbsp;&nbsp;object_manipulation_msgs::GraspHandPostureExecutionGoal::GRASP <br>
+&nbsp;&nbsp;&nbsp;&nbsp;object_manipulation_msgs::GraspHandPostureExecutionGoal::RELEASE <br>
 along with  angles...
 
 and sends commands to the JointTrajectoryAction controller in its own <br>
 namespace, using a non-blocking Action call to
-               .../follow_joint_trajectory/
+&nbsp;&nbsp;&nbsp;&nbsp;.../follow_joint_trajectory/
 and monitors the state of the controller using a callback on the topic
-               .../state
+&nbsp;&nbsp;&nbsp;&nbsp;.../state
 <br>
 
 <br>
 The thumb is moved during the pre-grasp phase, using position control.
 
 In the grasp phase, there are 3 modes of operation (configured by launch file): <br>
-.  - position control <br>
-.  - position stall checking <br>
-.  - velocity stall checking (not finished) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;- position control <br>
+&nbsp;&nbsp;&nbsp;&nbsp;- position stall checking <br>
+&nbsp;&nbsp;&nbsp;&nbsp;- velocity stall checking (not finished) <br>
 The simulated robot will close the hand until the average change of position of all 3 joints in each finger is below a threshold. The result is that each finger will stop independently if it can't move any further. <br>
 The real robot works in the same way, but the controller only checks the position of the main encoder for each finger.
 
@@ -82,12 +82,12 @@ You may want to move the arm away from the body. <br>
 Watch the simulated or real robot, and execute the following test commands: <br>
 $ rosrun reem_hand_grasp_controller grasp_left <br>
 $ rosrun reem_hand_grasp_controller release_left <br>
-or
+or <br>
 $ rosrun reem_hand_grasp_controller grasp_right <br>
 $ rosrun reem_hand_grasp_controller release_right <br>
 
-This grasp controller node prints lots of debugging output, 
-or to get status from the JointTrajectoryAction controller:
+This grasp controller node prints lots of debugging output, <br>
+or to get status from the JointTrajectoryAction controller: <br>
 $ rostopic echo /left_hand_controller/state
 
 
