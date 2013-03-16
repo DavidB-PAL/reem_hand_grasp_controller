@@ -1,0 +1,134 @@
+<!-- 
+reem_hand_grasp_controller
+
+Launch hand posture controller & Action Server for the left & right hand
+of the REEM robot.
+
+The node is loaded in the namespace of each hand,
+so it can use the 'follow_joint_trajectory' Action,
+and also provide the 'grasp_posture_controller' Action.
+
+For details of the modes of operation, see the README.md file.
+-->
+<launch>
+
+   <!-- Load the controller with parameters for simulated or real robot -->
+   <arg name="sim" default="false" />
+
+
+   <!-- ToDo: currently this launch file is copy-paste, need to change it 
+              so the same parameters can easily be used for both nodes -->
+
+
+   <group ns="left_hand_controller">
+      <node name="grasp_posture_controller" pkg="reem_hand_grasp_controller" type="reem_hand_grasp_controller" respawn="true" output="screen">
+
+         <remap from="posture_action_name" to="grasp_posture_controller" /> <!-- Action Server provided by this node -->
+         <remap from="gripper_action_name" to="follow_joint_trajectory" /> <!-- send commands to this Action -->
+         <remap from="grasp_query_name" to="grasp_status" /> <!-- Provide Service for checking if grasp is complete -->
+
+         <param name="sim" value="$(arg sim)" /> <!-- control 7 joints in simulation, or 3 on real robot -->
+
+         <!-- Simulated robot  -->
+         <!-- currently using 'position stalled' check for grasping  -->
+            <param if="$(arg sim)" name="goal_time_pre_grasp"          value="1.5" /> <!-- pre-grasp speed -->
+            <param if="$(arg sim)" name="position_threshold_pre_grasp" value="0.001" />
+
+            <param if="$(arg sim)" name="goal_time_grasp"              value="3.0" /> <!-- grasp speed -->
+
+            <param if="$(arg sim)" name="use_position_threshold_grasp" value="false" />
+            <param if="$(arg sim)" name="position_threshold_grasp"     value="0.05" />
+
+            <param if="$(arg sim)" name="check_position_stalled_grasp" value="true" /> <!-- check if grasp joint positions are not changing -->
+            <param if="$(arg sim)" name="position_stall_timeout_grasp" value="0.2" />
+            <param if="$(arg sim)" name="position_stall_epsilon_grasp" value="0.07" /> <!-- a higher value makes it cut-out more quickly -->
+
+            <param if="$(arg sim)" name="check_velocity_stalled_grasp"   value="false" />
+            <param if="$(arg sim)" name="stall_velocity_threshold_grasp" value="0.0005" />
+            <param if="$(arg sim)" name="stall_timeout_grasp"            value="0.1" />
+
+            <param if="$(arg sim)" name="goal_time_release"          value="4.0" /> <!-- release speed -->
+            <param if="$(arg sim)" name="position_threshold_release" value="0.001" />
+
+         <!-- Real robot  -->
+         <!-- currently using 'position reached' check for grasping, the 'position stalled' check has stopped working -->
+            <param unless="$(arg sim)" name="goal_time_pre_grasp"          value="1.0" /> <!-- pre-grasp speed -->
+            <param unless="$(arg sim)" name="position_threshold_pre_grasp" value="0.10" />
+
+            <param unless="$(arg sim)" name="goal_time_grasp"              value="2.5" /> <!-- grasp speed -->
+
+            <param unless="$(arg sim)" name="use_position_threshold_grasp" value="true" /> <!-- check if grasp joint position is reached -->
+            <param unless="$(arg sim)" name="position_threshold_grasp"     value="0.15" />
+
+            <param unless="$(arg sim)" name="check_position_stalled_grasp" value="false" /> <!-- check if grasp joint positions are not changing -->
+            <param unless="$(arg sim)" name="position_stall_timeout_grasp" value="0.2" /> 
+            <param unless="$(arg sim)" name="position_stall_epsilon_index_grasp"   value="0.00004" /> <!-- compensate for different readings from each finger encoder -->
+            <param unless="$(arg sim)" name="position_stall_epsilon_middle_grasp"  value="0.0005" />
+            <param unless="$(arg sim)" name="estimate_actual_position"          value="true" /> <!-- compensate for slow position feedback -->
+
+            <param unless="$(arg sim)" name="check_velocity_stalled_grasp" value="false" />
+            <param unless="$(arg sim)" name="stall_velocity_threshold_grasp" value="0.3" /> 
+            <param unless="$(arg sim)" name="stall_timeout_grasp"            value="1.1" />
+
+            <param unless="$(arg sim)" name="goal_time_release"          value="1.0" /> <!-- release speed -->
+            <param unless="$(arg sim)" name="position_threshold_release" value="0.18" /> <!-- middle finger (lower) doesnt open fully -->
+      </node>
+   </group>
+
+
+   <group ns="right_hand_controller">
+      <node name="grasp_posture_controller" pkg="reem_hand_grasp_controller" type="reem_hand_grasp_controller" respawn="true" output="screen">
+
+         <remap from="posture_action_name" to="grasp_posture_controller" /> <!-- Action Server provided by this node -->
+         <remap from="gripper_action_name" to="follow_joint_trajectory" /> <!-- send commands to this Action -->
+         <remap from="grasp_query_name" to="grasp_status" /> <!-- Provide Service for checking if grasp is complete -->
+
+         <param name="sim" value="$(arg sim)" /> <!-- control 7 joints in simulation, or 3 on real robot -->
+
+         <!-- Simulated robot  -->
+         <!-- currently using 'position stalled' check for grasping  -->
+            <param if="$(arg sim)" name="goal_time_pre_grasp"          value="1.5" /> <!-- pre-grasp speed -->
+            <param if="$(arg sim)" name="position_threshold_pre_grasp" value="0.001" />
+
+            <param if="$(arg sim)" name="goal_time_grasp"              value="3.0" /> <!-- grasp speed -->
+
+            <param if="$(arg sim)" name="use_position_threshold_grasp" value="false" />
+            <param if="$(arg sim)" name="position_threshold_grasp"     value="0.05" />
+
+            <param if="$(arg sim)" name="check_position_stalled_grasp" value="true" /> <!-- check if grasp joint positions are not changing -->
+            <param if="$(arg sim)" name="position_stall_timeout_grasp" value="0.2" />
+            <param if="$(arg sim)" name="position_stall_epsilon_grasp" value="0.07" /> <!-- a higher value makes it cut-out more quickly -->
+
+            <param if="$(arg sim)" name="check_velocity_stalled_grasp"   value="false" />
+            <param if="$(arg sim)" name="stall_velocity_threshold_grasp" value="0.0005" />
+            <param if="$(arg sim)" name="stall_timeout_grasp"            value="0.1" />
+
+            <param if="$(arg sim)" name="goal_time_release"          value="4.0" /> <!-- release speed -->
+            <param if="$(arg sim)" name="position_threshold_release" value="0.001" />
+
+         <!-- Real robot  -->
+         <!-- currently using 'position reached' check for grasping, the 'position stalled' check has stopped working -->
+            <param unless="$(arg sim)" name="goal_time_pre_grasp"          value="1.0" /> <!-- pre-grasp speed -->
+            <param unless="$(arg sim)" name="position_threshold_pre_grasp" value="0.10" />
+
+            <param unless="$(arg sim)" name="goal_time_grasp"              value="2.5" /> <!-- grasp speed -->
+
+            <param unless="$(arg sim)" name="use_position_threshold_grasp" value="true" /> <!-- check if grasp joint position is reached -->
+            <param unless="$(arg sim)" name="position_threshold_grasp"     value="0.15" />
+
+            <param unless="$(arg sim)" name="check_position_stalled_grasp" value="false" /> <!-- check if grasp joint positions are not changing -->
+            <param unless="$(arg sim)" name="position_stall_timeout_grasp" value="0.2" /> 
+            <param unless="$(arg sim)" name="position_stall_epsilon_index_grasp"   value="0.00004" /> <!-- compensate for different readings from each finger encoder -->
+            <param unless="$(arg sim)" name="position_stall_epsilon_middle_grasp"  value="0.0005" />
+            <param unless="$(arg sim)" name="estimate_actual_position"          value="true" /> <!-- compensate for slow position feedback -->
+
+            <param unless="$(arg sim)" name="check_velocity_stalled_grasp" value="false" />
+            <param unless="$(arg sim)" name="stall_velocity_threshold_grasp" value="0.3" /> 
+            <param unless="$(arg sim)" name="stall_timeout_grasp"            value="1.1" />
+
+            <param unless="$(arg sim)" name="goal_time_release"          value="1.0" /> <!-- release speed -->
+            <param unless="$(arg sim)" name="position_threshold_release" value="0.18" /> <!-- middle finger (lower) doesnt open fully -->
+      </node>
+   </group>
+
+</launch>

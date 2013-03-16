@@ -1,0 +1,29 @@
+<package>
+  <description brief="reem_hand_grasp_controller">
+Grasp controller and Action Server for the REEM robot hand
+
+This node provides an all-in-one posture controller for the REEM hand, and can be used directly as an Action Server for the hand, whilst also being compatible with the ROS Manipulation Pipeline.
+
+Works with both simulated or real robot. In simulation, the controller moves all 3 joints of each finger with some delay, to mimic the behaviour of the underactuated joints on the real robot. 
+
+There are 3 modes of operation: pre-grasp, grasp and release.
+Position control is used, but the grasp can optionally use velocity feedback.
+
+This node mimics the interface of pr2_gripper_grasp_controller.
+  </description>
+  <author>David Butterworth</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/reem_hand_grasp_controller</url>
+
+  <depend package="actionlib"/>
+  <depend package="pr2_controllers_msgs"/>
+  <depend package="object_manipulation_msgs"/>
+
+  <depend package="sensor_msgs"/>
+
+  <depend package="control_msgs"/>
+
+</package>
+
+
