@@ -14,8 +14,8 @@ Works with both simulated or real robot. In simulation, the controller moves all
 <br>
 Creates a ROS Action Server at <br>
 &nbsp;&nbsp;&nbsp;&nbsp;/Node_Namespace/grasp_posture_controller/ <br>
-so it should be launched under the same namespace as <br>
-the hand controllers, such that running 2 nodes gives e.g. <br>
+so it should be launched under the same namespace as the hand controllers, <br>
+such that running 2 nodes gives e.g. <br>
 &nbsp;&nbsp;&nbsp;&nbsp;/left_hand_controller/grasp_posture_controller/ <br>
 &nbsp;&nbsp;&nbsp;&nbsp;/right_hand_controller/grasp_posture_controller/ <br>
 
@@ -27,10 +27,10 @@ containing one of three goals <br>
 &nbsp;&nbsp;&nbsp;&nbsp;object_manipulation_msgs::GraspHandPostureExecutionGoal::RELEASE <br>
 along with  angles...
 
-and sends commands to the JointTrajectoryAction controller in its own <br>
-namespace, using a non-blocking Action call to
-&nbsp;&nbsp;&nbsp;&nbsp;.../follow_joint_trajectory/
-and monitors the state of the controller using a callback on the topic
+and sends commands to the JointTrajectoryAction controller in its own namespace, <br>
+using a non-blocking Action call to <br>
+&nbsp;&nbsp;&nbsp;&nbsp;.../follow_joint_trajectory/ <br>
+and monitors the state of the controller using a callback on the topic <br>
 &nbsp;&nbsp;&nbsp;&nbsp;.../state
 <br>
 
@@ -41,10 +41,11 @@ In the grasp phase, there are 3 modes of operation (configured by launch file): 
 &nbsp;&nbsp;&nbsp;&nbsp;- position control <br>
 &nbsp;&nbsp;&nbsp;&nbsp;- position stall checking <br>
 &nbsp;&nbsp;&nbsp;&nbsp;- velocity stall checking (not finished) <br>
-The simulated robot will close the hand until the average change of position of all 3 joints in each finger is below a threshold. The result is that each finger will stop independently if it can't move any further. <br>
+The simulated robot will close the hand until the average change of position of all 3 joints in each finger is below a threshold. <br>
+The result is that each finger will stop independently if it can't move any further. <br>
 The real robot works in the same way, but the controller only checks the position of the main encoder for each finger.
 
-** Note: Currently position control is enabled for the real robot. Position stall checking has stopped working due to a problem with reading the positions from the encoders. <br>
+*** Note: Currently position control is enabled for the real robot. Position stall checking has stopped working due to a problem with reading the positions from the encoders. <br>
 Velocity stall checking is designed to do the same thing by using the raw velocity values directly from the controller, but currently this information is not available.
 
 In the release phase, the controller uses position control and opens the hand in 2 steps, to allow the 
