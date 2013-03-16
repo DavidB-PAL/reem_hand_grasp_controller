@@ -13,11 +13,11 @@ Works with both simulated or real robot. In simulation, the controller moves all
 
 <br>
 Creates a ROS Action Server at <br>
-    /Node_Namespace/grasp_posture_controller/ <br>
+        /Node_Namespace/grasp_posture_controller/ <br>
 so it should be launched under the same namespace as <br>
 the hand controllers, such that running 2 nodes gives e.g. <br>
-    /left_hand_controller/grasp_posture_controller/ <br>
-    /right_hand_controller/grasp_posture_controller/ <br>
+        /left_hand_controller/grasp_posture_controller/ <br>
+        /right_hand_controller/grasp_posture_controller/ <br>
 
 It receives Action messages of type <br>
     object_manipulation_msgs::GraspHandPostureExecutionAction <br>
