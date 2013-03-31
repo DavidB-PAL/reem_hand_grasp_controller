@@ -14,6 +14,9 @@ rosbuild_init()
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
+# Create sub directory     
+file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/test)
+
 # Hand Posture Controller
 rosbuild_add_executable(reem_hand_grasp_controller src/reem_hand_grasp_controller.cpp)
 
